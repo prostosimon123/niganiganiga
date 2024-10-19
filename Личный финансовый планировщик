@@ -1,0 +1,33 @@
+//server.js
+const express = require('express');
+const mongoose = require('mongoose');
+
+const app = express();
+
+app.use(express.json());
+
+//Подключение к базе данных
+moongoose.connect('mongodb://localhost:27017/finance', {
+useNewUrlParser: true,
+useUnifiledTopology: true
+});
+
+//Модель транзакций
+const Transaction = mongoose.model('Transaction', {
+type: String,
+amount: Number,
+category: String,
+date: Date,
+});
+
+//Добавление новой транзакции
+app.post('/transactions', async (req, res) => {
+const transaction = new Transaction (req.body);
+await transaction.save();
+res.send(transaction);
+});
+
+//Запуск сервера
+app.listen(3000, () => {
+console.log('Сервер запущен на https://localhost:3000');
+});
